@@ -6,23 +6,52 @@
 document.addEventListener('DOMContentLoaded', function() {
     initAnimations();
     initMobileMenu();
-    updateCartBadge();
-    checkAuth();
+    initSmoothScroll();
 });
 
-// Инициализация анимаций при загрузке
+// Инициализация анимаций при загрузке с Intersection Observer
 function initAnimations() {
-    const elements = document.querySelectorAll('.fade-in, .program-card, .cart-item');
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
             }
         });
-    }, { threshold: 0.1 });
+    }, observerOptions);
 
-    elements.forEach(el => observer.observe(el));
+    // Наблюдаем за элементами с анимацией
+    const animatedElements = document.querySelectorAll('.program-card, .section, .fade-in');
+    animatedElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        observer.observe(el);
+    });
+}
+
+// Плавная прокрутка к якорям
+function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
 }
 
 // Мобильное меню
@@ -47,44 +76,6 @@ function initMobileMenu() {
     }
 }
 
-// Обновление счётчика корзины в шапке
-function updateCartBadge() {
-    const badge = document.querySelector('.cart-badge');
-    if (badge) {
-        const cart = getCart();
-        const itemCount = cart.length;
-        badge.textContent = itemCount;
-        badge.style.display = itemCount > 0 ? 'inline-block' : 'none';
-    }
-}
-
-// Получение корзины из localStorage
-function getCart() {
-    const cart = localStorage.getItem('cart');
-    return cart ? JSON.parse(cart) : [];
-}
-
-// Проверка авторизации
-function checkAuth() {
-    const currentUser = getCurrentUser();
-    const authLinks = document.querySelectorAll('.auth-link');
-    
-    authLinks.forEach(link => {
-        if (currentUser) {
-            if (link.textContent.includes('Войти')) {
-                link.textContent = '👤 Профиль';
-                link.href = 'profile.html';
-            }
-        }
-    });
-}
-
-// Получение текущего пользователя
-function getCurrentUser() {
-    const user = localStorage.getItem('currentUser');
-    return user ? JSON.parse(user) : null;
-}
-
 // Показ уведомления
 function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
@@ -95,10 +86,11 @@ function showNotification(message, type = 'success') {
         padding: 1rem 2rem;
         background-color: ${type === 'success' ? '#10b981' : '#ef4444'};
         color: white;
-        border-radius: 8px;
+        border-radius: 50px;
         z-index: 10000;
         animation: slideDown 0.3s ease-out;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        font-weight: 600;
     `;
     notification.textContent = message;
     document.body.appendChild(notification);
@@ -109,7 +101,7 @@ function showNotification(message, type = 'success') {
     }, 3000);
 }
 
-// Форматирование даты
+// Форматирование даты (для auth.js и profile.html)
 function formatDate(date) {
     const d = new Date(date);
     const day = String(d.getDate()).padStart(2, '0');

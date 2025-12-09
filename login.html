@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Вход - SMERT-SHOP</title>
+    <title>Вход - Smert Shop</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- Шапка сайта -->
     <header>
         <nav>
-            <a href="index.html" class="logo">SMERT-SHOP</a>
+            <a href="index.html" class="logo">Smert Shop</a>
             <button class="mobile-menu-btn">☰</button>
             <ul class="nav-links">
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="cart.html">Корзина <span class="cart-badge">0</span></a></li>
-                <li><a href="login.html" class="auth-link">Войти</a></li>
+                <li><a href="index.html#catalog">Каталог</a></li>
+                <li><a href="index.html#about">О нас</a></li>
+                <li><a href="index.html#contact">Контакты</a></li>
+                <li><a href="login.html" class="auth-link">Кабинет</a></li>
             </ul>
         </nav>
     </header>
@@ -24,7 +24,7 @@
     <div class="container">
         <!-- Форма входа -->
         <div class="form-container" id="login-form">
-            <h2 class="text-center" style="color: var(--accent-primary); margin-bottom: 2rem;">Вход в аккаунт</h2>
+            <h2 class="text-center" style="color: var(--white); margin-bottom: 2rem;">Вход в аккаунт</h2>
             
             <form onsubmit="handleLogin(event)">
                 <div class="form-group">
@@ -83,17 +83,16 @@
         <div class="footer-content">
             <div class="footer-links">
                 <a href="index.html">Главная</a>
-                <a href="catalog.html">Каталог</a>
-                <a href="cart.html">Корзина</a>
-                <a href="login.html">Войти</a>
+                <a href="index.html#catalog">Каталог</a>
+                <a href="index.html#about">О нас</a>
+                <a href="index.html#contact">Контакты</a>
             </div>
-            <p class="footer-copyright">© 2024 SMERT-SHOP. Все права защищены.</p>
+            <p class="footer-copyright">© 2024 Smert Shop. Все права защищены.</p>
         </div>
     </footer>
 
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/cart.js"></script>
     <script>
         // Переключение между формами входа и регистрации
         function toggleForms() {
