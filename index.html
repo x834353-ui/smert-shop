@@ -3,47 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMERT-SHOP - Бесплатное ПО</title>
+    <title>Smert Shop - Элитная автоматизация</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- Шапка сайта -->
     <header>
         <nav>
-            <a href="index.html" class="logo">SMERT-SHOP</a>
+            <a href="index.html" class="logo">Smert Shop</a>
             <button class="mobile-menu-btn">☰</button>
             <ul class="nav-links">
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="cart.html">Корзина <span class="cart-badge">0</span></a></li>
-                <li><a href="login.html" class="auth-link">Войти</a></li>
+                <li><a href="#catalog">Каталог</a></li>
+                <li><a href="#about">О нас</a></li>
+                <li><a href="#contact">Контакты</a></li>
+                <li><a href="profile.html" class="auth-link">Кабинет</a></li>
             </ul>
         </nav>
     </header>
 
     <!-- Hero секция -->
     <section class="hero">
-        <h1>Бесплатное ПО для всех</h1>
-        <p>Скачивайте полезные программы и инструменты совершенно бесплатно</p>
-        <a href="catalog.html" class="btn btn-primary">Перейти в каталог</a>
+        <div class="hero-badge">ЭЛИТНАЯ АВТОМАТИЗАЦИЯ</div>
+        <h1>Smert Shop</h1>
+        <p>Профессиональные Python плагины и инструменты для автоматизации вашего бизнеса</p>
+        <div class="hero-buttons">
+            <a href="#catalog" class="btn btn-primary">Смотреть каталог</a>
+            <a href="#contact" class="btn btn-secondary">Связаться</a>
+        </div>
     </section>
 
-    <!-- Популярные программы -->
+    <!-- Каталог программ -->
     <div class="container">
-        <section class="section">
-            <h2 class="section-title">Популярные программы</h2>
-            <div class="programs-grid" id="popular-programs">
+        <section class="section" id="catalog">
+            <h2 class="section-title">Каталог программ</h2>
+            <div class="programs-grid" id="programs-grid">
                 <!-- Программы будут добавлены через JavaScript -->
             </div>
         </section>
 
-        <!-- Призыв к действию -->
-        <section class="section text-center">
-            <h2 class="section-title">Готовы начать?</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 2rem;">
-                Присоединяйтесь к тысячам пользователей, которые уже используют наши программы
+        <!-- О нас -->
+        <section class="section text-center" id="about">
+            <h2 class="section-title">О нас</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto; font-size: 1.1rem; line-height: 1.8;">
+                Мы предоставляем доступ к лучшим open-source инструментам автоматизации. Все программы тщательно отобраны и протестированы нашей командой.
             </p>
-            <a href="catalog.html" class="btn btn-primary">Смотреть все программы</a>
+        </section>
+
+        <!-- Контакты -->
+        <section class="section text-center" id="contact">
+            <h2 class="section-title">Готовы начать?</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 1.1rem;">
+                Свяжитесь с нами для получения дополнительной информации
+            </p>
+            <a href="https://github.com/sidor0912" target="_blank" class="btn btn-primary">Перейти на GitHub</a>
         </section>
     </div>
 
@@ -52,34 +64,15 @@
         <div class="footer-content">
             <div class="footer-links">
                 <a href="index.html">Главная</a>
-                <a href="catalog.html">Каталог</a>
-                <a href="cart.html">Корзина</a>
-                <a href="login.html">Войти</a>
+                <a href="#catalog">Каталог</a>
+                <a href="#about">О нас</a>
+                <a href="#contact">Контакты</a>
             </div>
-            <p class="footer-copyright">© 2024 SMERT-SHOP. Все права защищены.</p>
+            <p class="footer-copyright">© 2024 Smert Shop. Все права защищены.</p>
         </div>
     </footer>
 
     <script src="js/main.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/cart.js"></script>
-    <script>
-        // Отображение популярных программ на главной странице
-        document.addEventListener('DOMContentLoaded', function() {
-            const container = document.getElementById('popular-programs');
-            if (container) {
-                container.innerHTML = programs.map(program => `
-                    <div class="program-card">
-                        <span class="program-icon">${program.icon}</span>
-                        <h3>${program.name}</h3>
-                        <p>${program.description}</p>
-                        <button class="btn btn-primary" onclick="addToCart(getProgramById('${program.id}'))">
-                            Добавить в корзину
-                        </button>
-                    </div>
-                `).join('');
-            }
-        });
-    </script>
+    <script src="js/programs.js"></script>
 </body>
 </html>
