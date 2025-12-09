@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профиль - SMERT-SHOP</title>
+    <title>Профиль - Smert Shop</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <!-- Шапка сайта -->
     <header>
         <nav>
-            <a href="index.html" class="logo">SMERT-SHOP</a>
+            <a href="index.html" class="logo">Smert Shop</a>
             <button class="mobile-menu-btn">☰</button>
             <ul class="nav-links">
-                <li><a href="index.html">Главная</a></li>
-                <li><a href="catalog.html">Каталог</a></li>
-                <li><a href="cart.html">Корзина <span class="cart-badge">0</span></a></li>
+                <li><a href="index.html#catalog">Каталог</a></li>
+                <li><a href="index.html#about">О нас</a></li>
+                <li><a href="index.html#contact">Контакты</a></li>
                 <li><a href="profile.html" class="auth-link">👤 Профиль</a></li>
             </ul>
         </nav>
@@ -47,16 +47,15 @@
             <div class="footer-links">
                 <a href="index.html">Главная</a>
                 <a href="catalog.html">Каталог</a>
-                <a href="cart.html">Корзина</a>
+                <a href="index.html#contact">Контакты</a>
                 <a href="profile.html">Профиль</a>
             </div>
-            <p class="footer-copyright">© 2024 SMERT-SHOP. Все права защищены.</p>
+            <p class="footer-copyright">© 2024 Smert Shop. Все права защищены.</p>
         </div>
     </footer>
 
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/cart.js"></script>
     <script>
         // Проверка авторизации при загрузке
         document.addEventListener('DOMContentLoaded', function() {

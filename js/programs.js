@@ -50,19 +50,23 @@ const programs = [
 
 // Отрисовка программ на главной странице
 document.addEventListener('DOMContentLoaded', function() {
-    const container = document.getElementById('programs-grid');
-    if (container) {
-        container.innerHTML = programs.map(program => `
-            <div class="program-card">
-                <span class="program-icon">${program.icon}</span>
-                <h3>${program.name}</h3>
-                <p>${program.description}</p>
-                <a href="${program.github}" target="_blank" class="btn btn-primary">
-                    Перейти на GitHub
-                </a>
-            </div>
-        `).join('');
-    }
+    const containers = ['programs-grid', 'catalog-programs'];
+    
+    containers.forEach(containerId => {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = programs.map(program => `
+                <div class="program-card">
+                    <span class="program-icon">${program.icon}</span>
+                    <h3>${program.name}</h3>
+                    <p>${program.description}</p>
+                    <a href="${program.github}" target="_blank" class="btn btn-primary">
+                        Перейти на GitHub
+                    </a>
+                </div>
+            `).join('');
+        }
+    });
 });
 
 // Получение программы по ID
