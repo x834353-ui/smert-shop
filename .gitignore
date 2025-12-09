@@ -1,0 +1,21 @@
+# Временные файлы
+/tmp/
+*.tmp
+*.log
+
+# Файлы операционной системы
+.DS_Store
+Thumbs.db
+
+# IDE файлы
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node modules (если понадобятся в будущем)
+node_modules/
+
+# Build файлы
+dist/
+build/
