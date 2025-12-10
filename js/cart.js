@@ -140,25 +140,93 @@ const programs = [
         id: 'cardinal-bot',
         name: 'Cardinal Bot',
         description: 'Мощный бот для автоматизации задач и процессов',
-        icon: '🤖'
+        icon: '🤖',
+        link: null
     },
     {
         id: 'funpay-tools',
         name: 'FunPay Tools',
         description: 'Набор инструментов для работы с FunPay',
-        icon: '🛠️'
+        icon: '🛠️',
+        link: null
     },
     {
         id: 'auto-clicker',
         name: 'Auto Clicker',
         description: 'Автоматический кликер с настройками',
-        icon: '🖱️'
+        icon: '🖱️',
+        link: 'https://github.com/oriash93/AutoClicker'
     },
     {
         id: 'password-generator',
         name: 'Password Generator',
         description: 'Генератор надёжных паролей',
-        icon: '🔐'
+        icon: '🔐',
+        link: null
+    }
+];
+const programs = [
+    {
+        id: 'cardinal-bot',
+        name: 'Cardinal Bot',
+        description: 'Мощный бот для автоматизации задач и процессов',
+        icon: '🤖',
+        link: null
+    },
+    {
+        id: 'funpay-tools',
+        name: 'FunPay Tools',
+        description: 'Набор инструментов для работы с FunPay',
+        icon: '🛠️',
+        link: null
+    },
+    {
+        id: 'auto-clicker',
+        name: 'Auto Clicker',
+        description: 'Автоматический кликер с настройками',
+        icon: '🖱️',
+        link: 'https://github.com/oriash93/AutoClicker'
+    },
+    {
+        id: 'password-generator',
+        name: 'Password Generator',
+        description: 'Генератор надёжных паролей',
+        icon: '🔐',
+        link: null
+    }
+];
+
+// FunPay Cardinal плагины
+const plugins = [
+    {
+        id: 'auto-stars',
+        name: 'AutoStars',
+        description: 'Автоматизация рейтингов и отзывов',
+        icon: '⭐',
+        type: 'Бесплатный плагин'
+    },
+    {
+        id: 'cookie-changer',
+        name: 'Cookie Changer',
+        description: 'Смена golden_key прямо в боте',
+        icon: '🍪',
+        link: 'https://t.me/fpc_plugins',
+        type: 'Бесплатный плагин'
+    },
+    {
+        id: 'profile-stats',
+        name: 'Advanced Profile Stats',
+        description: 'Статистика, сумма к выводу и другие параметры',
+        icon: '📊',
+        type: 'Бесплатный плагин'
+    },
+    {
+        id: 'fpc-plugins-repo',
+        name: 'FunPay Cardinal Plugins',
+        description: 'GitHub репозиторий с плагинами',
+        icon: '🔌',
+        link: 'https://github.com/SellPay1/FunPayCardinalPlugins',
+        type: 'Репозиторий'
     }
 ];
 

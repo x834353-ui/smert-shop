@@ -15,6 +15,7 @@
             <ul class="nav-links">
                 <li><a href="index.html">Главная</a></li>
                 <li><a href="catalog.html">Каталог</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
                 <li><a href="cart.html">Корзина <span class="cart-badge">0</span></a></li>
                 <li><a href="login.html" class="auth-link">Войти</a></li>
             </ul>
@@ -28,12 +29,40 @@
         <a href="catalog.html" class="btn btn-primary">Перейти в каталог</a>
     </section>
 
+    <!-- Основной магазин - яркий баннер -->
+    <div class="container">
+        <section class="main-shop-banner-home">
+            <div class="main-shop-content">
+                <span class="main-shop-icon">🛒</span>
+                <h2>ОСНОВНОЙ МАГАЗИН SMERT SHOP</h2>
+                <p>Весь ассортимент товаров и услуг в одном месте</p>
+                <a href="https://71e46d79-cc43-4d0b-a8e2-86afa0ac4b03-00-28qpcbh7rzjmx.janeway.replit.dev/" 
+                   class="btn btn-shop-main" 
+                   target="_blank" 
+                   rel="noopener noreferrer">
+                    Перейти в магазин →
+                </a>
+            </div>
+        </section>
+    </div>
+
     <!-- Популярные программы -->
     <div class="container">
         <section class="section">
             <h2 class="section-title">Популярные программы</h2>
             <div class="programs-grid" id="popular-programs">
                 <!-- Программы будут добавлены через JavaScript -->
+            </div>
+        </section>
+
+        <!-- FunPay Cardinal плагины -->
+        <section class="section">
+            <h2 class="section-title">🔌 FunPay Cardinal плагины</h2>
+            <p style="color: var(--text-secondary); text-align: center; margin-bottom: 2rem;">
+                Простые и бесплатные плагины для FunPay Cardinal
+            </p>
+            <div class="plugins-grid" id="plugins-section">
+                <!-- Плагины будут добавлены через JavaScript -->
             </div>
         </section>
 
@@ -50,11 +79,30 @@
     <!-- Футер -->
     <footer>
         <div class="footer-content">
-            <div class="footer-links">
-                <a href="index.html">Главная</a>
-                <a href="catalog.html">Каталог</a>
-                <a href="cart.html">Корзина</a>
-                <a href="login.html">Войти</a>
+            <div class="footer-section">
+                <h4>Навигация</h4>
+                <div class="footer-links">
+                    <a href="index.html">Главная</a>
+                    <a href="catalog.html">Каталог</a>
+                    <a href="contacts.html">Контакты</a>
+                    <a href="cart.html">Корзина</a>
+                    <a href="login.html">Войти</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Контакты</h4>
+                <div class="footer-links">
+                    <a href="https://t.me/xomka2222" target="_blank" rel="noopener noreferrer">📱 Telegram</a>
+                    <a href="https://discord.gg/chk9dNSQ" target="_blank" rel="noopener noreferrer">💬 Discord</a>
+                    <a href="https://t.me/SmertTeamfunpay" target="_blank" rel="noopener noreferrer">📢 Telegram канал</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Ссылки</h4>
+                <div class="footer-links">
+                    <a href="https://xomkaportfolio.replit.app/" target="_blank" rel="noopener noreferrer">💼 Портфолио</a>
+                    <a href="https://71e46d79-cc43-4d0b-a8e2-86afa0ac4b03-00-28qpcbh7rzjmx.janeway.replit.dev/" target="_blank" rel="noopener noreferrer">🛒 Основной магазин</a>
+                </div>
             </div>
             <p class="footer-copyright">© 2024 SMERT-SHOP. Все права защищены.</p>
         </div>
@@ -76,6 +124,28 @@
                         <button class="btn btn-primary" onclick="addToCart(getProgramById('${program.id}'))">
                             Добавить в корзину
                         </button>
+                    </div>
+                `).join('');
+            }
+
+            // Отображение плагинов
+            const pluginsContainer = document.getElementById('plugins-section');
+            if (pluginsContainer) {
+                pluginsContainer.innerHTML = plugins.map(plugin => `
+                    <div class="plugin-card">
+                        <span class="plugin-icon">${plugin.icon}</span>
+                        <div class="plugin-badge">${plugin.type}</div>
+                        <h3>${plugin.name}</h3>
+                        <p>${plugin.description}</p>
+                        ${plugin.link ? `
+                            <a href="${plugin.link}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                                Перейти →
+                            </a>
+                        ` : `
+                            <button class="btn btn-secondary" disabled>
+                                Скоро
+                            </button>
+                        `}
                     </div>
                 `).join('');
             }
