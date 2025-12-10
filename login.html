@@ -254,15 +254,15 @@
             const code = document.getElementById('verification-code').value;
             const messageEl = document.getElementById('verification-message');
 
+            // Получаем временные данные перед верификацией
+            const tempData = JSON.parse(localStorage.getItem('tempRegistration') || '{}');
+            
             const result = completeRegistration(pendingEmail, code);
 
             if (result.success) {
                 messageEl.className = 'success-message';
                 messageEl.textContent = result.message;
                 messageEl.style.display = 'block';
-                
-                // Получаем временные данные для автовхода
-                const tempData = JSON.parse(localStorage.getItem('tempRegistration') || '{}');
                 
                 setTimeout(() => {
                     // Автоматический вход после верификации
