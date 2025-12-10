@@ -19,6 +19,8 @@ function addToCart(program) {
         name: program.name,
         description: program.description,
         icon: program.icon,
+        downloadUrl: program.downloadUrl,
+        type: program.type,
         addedAt: new Date().toISOString()
     });
 
@@ -49,19 +51,33 @@ function clearCart() {
 }
 
 // Скачивание программы
-function downloadProgram(programName) {
+function downloadProgram(programId) {
+    const program = getProgramById(programId);
+    if (!program) {
+        showNotification('Программа не найдена', 'error');
+        return;
+    }
+
     // Добавление в историю скачиваний
     if (isAuthenticated()) {
-        addDownload(programName);
+        addDownload(program.name);
     }
     
-    // Демо-алерт (в реальном приложении здесь был бы реальный файл)
-    showNotification(`Скачивание ${programName} начато...`);
-    
-    // Имитация скачивания
-    setTimeout(() => {
-        showNotification(`${programName} успешно скачан!`);
-    }, 2000);
+    // Реальное скачивание
+    if (program.type === 'plugin') {
+        // Для плагинов открываем Telegram ссылку
+        window.open(program.downloadUrl, '_blank');
+        showNotification(`Открываем Telegram для ${program.name}...`);
+    } else {
+        // Для программ запускаем скачивание файла
+        const link = document.createElement('a');
+        link.href = program.downloadUrl;
+        link.download = '';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showNotification(`Скачивание ${program.name} начато...`);
+    }
 }
 
 // Скачивание всех программ из корзины
@@ -75,7 +91,7 @@ function downloadAll() {
 
     cart.forEach((program, index) => {
         setTimeout(() => {
-            downloadProgram(program.name);
+            downloadProgram(program.id);
         }, index * 500);
     });
 
@@ -85,7 +101,7 @@ function downloadAll() {
         if (window.location.pathname.includes('cart.html')) {
             window.location.reload();
         }
-    }, cart.length * 500 + 2500);
+    }, cart.length * 500 + 2000);
 }
 
 // Обновление счётчика корзины
@@ -125,9 +141,10 @@ function renderCartItems() {
             <div class="cart-item-info">
                 <h3>${item.icon} ${item.name}</h3>
                 <p>${item.description}</p>
+                <small style="color: var(--text-secondary);">${item.type === 'plugin' ? 'Плагин FPC' : 'Программа'}</small>
             </div>
             <div>
-                <button class="btn btn-primary" onclick="downloadProgram('${item.name}')">Скачать</button>
+                <button class="btn btn-primary" onclick="downloadProgram('${item.id}')">${item.type === 'plugin' ? 'Открыть в Telegram' : 'Скачать'}</button>
                 <button class="btn btn-danger" onclick="removeFromCart('${item.id}'); renderCartItems();">Удалить</button>
             </div>
         </div>
@@ -137,28 +154,44 @@ function renderCartItems() {
 // Каталог программ
 const programs = [
     {
-        id: 'cardinal-bot',
-        name: 'Cardinal Bot',
-        description: 'Мощный бот для автоматизации задач и процессов',
-        icon: '🤖'
-    },
-    {
-        id: 'funpay-tools',
-        name: 'FunPay Tools',
-        description: 'Набор инструментов для работы с FunPay',
-        icon: '🛠️'
+        id: 'funpay-cardinal',
+        name: 'FunPay Cardinal',
+        description: 'Бот для автоматизации продаж на FunPay',
+        icon: '🤖',
+        downloadUrl: 'https://github.com/sidor0912/FunPayCardinal/archive/refs/heads/master.zip',
+        type: 'program'
     },
     {
         id: 'auto-clicker',
         name: 'Auto Clicker',
         description: 'Автоматический кликер с настройками',
-        icon: '🖱️'
+        icon: '🖱️',
+        downloadUrl: 'https://github.com/oriash93/AutoClicker/releases/download/v1.0.0.0/AutoClicker.zip',
+        type: 'program'
     },
     {
-        id: 'password-generator',
-        name: 'Password Generator',
-        description: 'Генератор надёжных паролей',
-        icon: '🔐'
+        id: 'autostars',
+        name: 'AutoStars',
+        description: 'Автоматическое выставление звёзд/отзывов',
+        icon: '⭐',
+        downloadUrl: 'https://t.me/fpc_plugins',
+        type: 'plugin'
+    },
+    {
+        id: 'cookie-changer',
+        name: 'Cookie Changer',
+        description: 'Смена golden_key прямо в боте',
+        icon: '🍪',
+        downloadUrl: 'https://t.me/fpc_plugins',
+        type: 'plugin'
+    },
+    {
+        id: 'advanced-profile-stats',
+        name: 'Advanced Profile Stats',
+        description: 'Статистика заработка, сумма к выводу',
+        icon: '📊',
+        downloadUrl: 'https://t.me/fpc_plugins',
+        type: 'plugin'
     }
 ];
 

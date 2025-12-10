@@ -34,6 +34,23 @@
     <!-- Футер -->
     <footer>
         <div class="footer-content">
+            <div class="footer-contacts">
+                <h3>📞 Наши контакты</h3>
+                <div class="contact-links">
+                    <a href="https://t.me/xomka2222" target="_blank">
+                        <span>📱</span> Telegram: @xomka2222
+                    </a>
+                    <a href="https://discord.gg/chk9dNSQ" target="_blank">
+                        <span>💬</span> Discord Server
+                    </a>
+                    <a href="https://t.me/SmertTeamfunpay" target="_blank">
+                        <span>📢</span> TG Канал
+                    </a>
+                    <a href="https://xomkaportfolio.replit.app/" target="_blank">
+                        <span>💼</span> Портфолио
+                    </a>
+                </div>
+            </div>
             <div class="footer-links">
                 <a href="index.html">Главная</a>
                 <a href="catalog.html">Каталог</a>
@@ -57,11 +74,14 @@
                         <span class="program-icon">${program.icon}</span>
                         <h3>${program.name}</h3>
                         <p>${program.description}</p>
+                        <span class="badge" style="display: inline-block; background-color: var(--accent-dark); color: white; padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.8rem; margin-bottom: 1rem;">
+                            ${program.type === 'plugin' ? 'Плагин FPC' : 'Программа'}
+                        </span>
                         <button class="btn btn-primary" onclick="addToCart(getProgramById('${program.id}'))">
                             Добавить в корзину
                         </button>
-                        <button class="btn btn-secondary" onclick="downloadProgram('${program.name}')" style="margin-top: 0.5rem;">
-                            Скачать сразу
+                        <button class="btn btn-secondary" onclick="downloadProgram('${program.id}')" style="margin-top: 0.5rem;">
+                            ${program.type === 'plugin' ? '📱 Получить в Telegram' : '⬇️ Скачать'}
                         </button>
                     </div>
                 `).join('');
