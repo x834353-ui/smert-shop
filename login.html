@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Animated Background -->
+    <canvas id="particles-canvas"></canvas>
+    
     <!-- Шапка сайта -->
     <header>
         <nav>
@@ -76,97 +79,247 @@
                 <p>Уже есть аккаунт? <a onclick="toggleForms()">Войти</a></p>
             </div>
         </div>
+
+        <!-- Форма верификации email -->
+        <div class="form-container hidden" id="verification-form">
+            <h2 class="text-center" style="color: var(--accent-primary); margin-bottom: 2rem;">Подтверждение Email</h2>
+            
+            <div class="info-message" id="verification-info">
+                Код верификации отправлен на ваш email. Введите его ниже для завершения регистрации.
+            </div>
+            
+            <form onsubmit="handleVerification(event)">
+                <div class="form-group">
+                    <label for="verification-code">Код верификации (6 цифр)</label>
+                    <input type="text" id="verification-code" class="verification-code-input" 
+                           required pattern="[0-9]{6}" maxlength="6" placeholder="123456">
+                </div>
+
+                <div id="verification-message" class="error-message" style="display: none;"></div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                    Подтвердить Email
+                </button>
+            </form>
+
+            <div class="form-toggle">
+                <p><a onclick="resendVerificationCode()">Отправить код повторно</a></p>
+            </div>
+        </div>
     </div>
 
     <!-- Футер -->
     <footer>
         <div class="footer-content">
-            <div class="footer-links">
-                <a href="index.html">Главная</a>
-                <a href="catalog.html">Каталог</a>
-                <a href="cart.html">Корзина</a>
-                <a href="login.html">Войти</a>
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Навигация</h3>
+                    <div class="footer-links">
+                        <a href="index.html">→ Главная</a>
+                        <a href="catalog.html">→ Каталог</a>
+                        <a href="cart.html">→ Корзина</a>
+                        <a href="login.html">→ Войти</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <div class="social-links">
+                        <a href="https://t.me/xomka2222" class="social-link" target="_blank">
+                            <span class="icon">📱</span>
+                            <span>Telegram: @xomka2222</span>
+                        </a>
+                        <a href="https://discord.gg/chk9dNSQ" class="social-link" target="_blank">
+                            <span class="icon">💬</span>
+                            <span>Discord Server</span>
+                        </a>
+                        <a href="https://t.me/SmertTeamfunpay" class="social-link" target="_blank">
+                            <span class="icon">📢</span>
+                            <span>TG Канал: SmertTeam</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Дополнительно</h3>
+                    <div class="footer-links">
+                        <a href="https://xomkaportfolio.replit.app/" target="_blank">→ Портфолио</a>
+                        <a href="https://71e46d79-cc43-4d0b-a8e2-86afa0ac4b03-00-28qpcbh7rzjmx.janeway.replit.dev/" target="_blank">→ Основной магазин</a>
+                    </div>
+                </div>
             </div>
+            
             <p class="footer-copyright">© 2024 SMERT-SHOP. Все права защищены.</p>
         </div>
     </footer>
 
+    <script src="js/particles.js"></script>
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/cart.js"></script>
     <script>
-        // Переключение между формами входа и регистрации
-        function toggleForms() {
-            const loginForm = document.getElementById('login-form');
-            const registerForm = document.getElementById('register-form');
-            
-            loginForm.classList.toggle('hidden');
-            registerForm.classList.toggle('hidden');
+        // Use IIFE to avoid global variable pollution
+        (function() {
+            let pendingEmail = '';
 
-            // Очистка сообщений об ошибках
-            document.getElementById('login-message').style.display = 'none';
-            document.getElementById('register-message').style.display = 'none';
-        }
-
-        // Обработка входа
-        function handleLogin(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            const messageEl = document.getElementById('login-message');
-
-            const result = login(email, password);
-
-            if (result.success) {
-                messageEl.className = 'success-message';
-                messageEl.textContent = result.message;
-                messageEl.style.display = 'block';
+            // Переключение между формами входа и регистрации
+            window.toggleForms = function() {
+                const loginForm = document.getElementById('login-form');
+                const registerForm = document.getElementById('register-form');
+                const verificationForm = document.getElementById('verification-form');
                 
-                setTimeout(() => {
-                    window.location.href = 'profile.html';
-                }, 1000);
-            } else {
-                messageEl.className = 'error-message';
-                messageEl.textContent = result.message;
-                messageEl.style.display = 'block';
-            }
-        }
+                loginForm.classList.toggle('hidden');
+                registerForm.classList.toggle('hidden');
+                verificationForm.classList.add('hidden');
 
-        // Обработка регистрации
-        function handleRegister(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirmPassword = document.getElementById('register-confirm-password').value;
-            const messageEl = document.getElementById('register-message');
+                // Очистка сообщений об ошибках
+                document.getElementById('login-message').style.display = 'none';
+                document.getElementById('register-message').style.display = 'none';
+                document.getElementById('verification-message').style.display = 'none';
+            };
 
-            const result = register(email, password, confirmPassword);
-
-            if (result.success) {
-                messageEl.className = 'success-message';
-                messageEl.textContent = result.message;
-                messageEl.style.display = 'block';
+            // Показ формы верификации
+            function showVerificationForm(email, code) {
+                pendingEmail = email;
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('register-form').classList.add('hidden');
+                document.getElementById('verification-form').classList.remove('hidden');
                 
-                setTimeout(() => {
-                    // Автоматический вход после регистрации
-                    login(email, password);
-                    window.location.href = 'profile.html';
-                }, 1500);
-            } else {
-                messageEl.className = 'error-message';
-                messageEl.textContent = result.message;
-                messageEl.style.display = 'block';
+                // В демо-режиме показываем код
+                const infoEl = document.getElementById('verification-info');
+                infoEl.innerHTML = `
+                    Код верификации отправлен на <strong>${email}</strong>.<br>
+                    <strong style="color: var(--accent-primary);">Ваш код: ${code}</strong><br>
+                    <small>(В реальной системе код придёт вам на email)</small>
+                `;
             }
-        }
 
-        // Проверка авторизации при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            if (isAuthenticated()) {
-                window.location.href = 'profile.html';
-            }
-        });
+            // Обработка входа
+            window.handleLogin = function(event) {
+                event.preventDefault();
+                
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                const messageEl = document.getElementById('login-message');
+
+                const result = login(email, password);
+
+                if (result.success) {
+                    messageEl.className = 'success-message';
+                    messageEl.textContent = result.message;
+                    messageEl.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        window.location.href = 'profile.html';
+                    }, 1000);
+                } else {
+                    messageEl.className = 'error-message';
+                    messageEl.textContent = result.message;
+                    messageEl.style.display = 'block';
+                }
+            };
+
+            // Обработка регистрации
+            window.handleRegister = function(event) {
+                event.preventDefault();
+                
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('register-confirm-password').value;
+                const messageEl = document.getElementById('register-message');
+
+                const result = register(email, password, confirmPassword);
+
+                if (result.success && result.needsVerification) {
+                    // Показываем форму верификации
+                    showVerificationForm(email, result.code);
+                } else if (result.success) {
+                    messageEl.className = 'success-message';
+                    messageEl.textContent = result.message;
+                    messageEl.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        login(email, password);
+                        window.location.href = 'profile.html';
+                    }, 1500);
+                } else {
+                    messageEl.className = 'error-message';
+                    messageEl.textContent = result.message;
+                    messageEl.style.display = 'block';
+                }
+            };
+
+            // Обработка верификации
+            window.handleVerification = function(event) {
+                event.preventDefault();
+                
+                const code = document.getElementById('verification-code').value;
+                const messageEl = document.getElementById('verification-message');
+
+                // Получаем временные данные перед верификацией
+                const tempData = JSON.parse(localStorage.getItem('tempRegistration') || '{}');
+                
+                const result = completeRegistration(pendingEmail, code);
+
+                if (result.success) {
+                    messageEl.className = 'success-message';
+                    messageEl.textContent = result.message;
+                    messageEl.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        // Автоматический вход после верификации
+                        if (tempData.email && tempData.password) {
+                            // tempData.password уже хеширован, нужно использовать оригинальный
+                            // Сохраняем текущего пользователя напрямую
+                            const users = getUsers();
+                            const user = users.find(u => u.email === tempData.email);
+                            if (user) {
+                                const session = {
+                                    id: user.id,
+                                    email: user.email,
+                                    loginAt: new Date().toISOString()
+                                };
+                                localStorage.setItem('currentUser', JSON.stringify(session));
+                            }
+                        }
+                        window.location.href = 'profile.html';
+                    }, 1500);
+                } else {
+                    messageEl.className = 'error-message';
+                    messageEl.textContent = result.message;
+                    messageEl.style.display = 'block';
+                }
+            };
+
+            // Повторная отправка кода
+            window.resendVerificationCode = function() {
+                const tempData = localStorage.getItem('tempRegistration');
+                if (!tempData) {
+                    showNotification('Данные регистрации не найдены', 'error');
+                    return;
+                }
+                
+                const registration = JSON.parse(tempData);
+                const code = generateVerificationCode();
+                sendVerificationCode(registration.email, code);
+                
+                const infoEl = document.getElementById('verification-info');
+                infoEl.innerHTML = `
+                    Новый код отправлен на <strong>${registration.email}</strong>.<br>
+                    <strong style="color: var(--accent-primary);">Ваш код: ${code}</strong><br>
+                    <small>(В реальной системе код придёт вам на email)</small>
+                `;
+                
+                showNotification('Новый код отправлен');
+            };
+
+            // Проверка авторизации при загрузке
+            document.addEventListener('DOMContentLoaded', function() {
+                if (isAuthenticated()) {
+                    window.location.href = 'profile.html';
+                }
+            });
+        })();
     </script>
 </body>
 </html>
