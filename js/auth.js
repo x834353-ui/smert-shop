@@ -7,6 +7,22 @@ function generateVerificationCode() {
     return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
+// Время жизни кода верификации (10 минут)
+const VERIFICATION_CODE_EXPIRY_MS = 10 * 60 * 1000;
+
+// Простое хеширование пароля (в продакшене использовать bcrypt или аналог)
+function hashPassword(password) {
+    // Примитивное хеширование для демонстрации
+    // В реальном приложении использовать bcrypt, scrypt или Argon2
+    let hash = 0;
+    for (let i = 0; i < password.length; i++) {
+        const char = password.charCodeAt(i);
+        hash = ((hash << 5) - hash) + char;
+        hash = hash & hash;
+    }
+    return 'hash_' + Math.abs(hash).toString(16);
+}
+
 // Отправка кода верификации (имитация)
 function sendVerificationCode(email, code) {
     // В реальном приложении здесь был бы вызов API для отправки email
@@ -17,7 +33,7 @@ function sendVerificationCode(email, code) {
         code: code,
         email: email,
         timestamp: Date.now(),
-        expiresIn: 10 * 60 * 1000 // 10 минут
+        expiresIn: VERIFICATION_CODE_EXPIRY_MS
     };
     localStorage.setItem('verificationCode', JSON.stringify(verificationData));
     
@@ -85,10 +101,10 @@ function register(email, password, confirmPassword) {
     const verificationCode = generateVerificationCode();
     sendVerificationCode(email, verificationCode);
 
-    // Сохраняем временные данные регистрации
+    // Сохраняем временные данные регистрации (с хешированным паролем)
     const tempRegistration = {
         email: email,
-        password: password,
+        password: hashPassword(password),
         timestamp: Date.now()
     };
     localStorage.setItem('tempRegistration', JSON.stringify(tempRegistration));
@@ -127,7 +143,7 @@ function completeRegistration(email, verificationCode) {
     const newUser = {
         id: Date.now(),
         email: email,
-        password: tempRegistration.password,
+        password: hashPassword(password), // Хешируем пароль
         registeredAt: new Date().toISOString(),
         verified: true
     };
@@ -146,9 +162,10 @@ function login(email, password) {
         return { success: false, message: 'Заполните все поля' };
     }
 
-    // Поиск пользователя
+    // Поиск пользователя (сравниваем хешированный пароль)
     const users = getUsers();
-    const user = users.find(u => u.email === email && u.password === password);
+    const hashedPassword = hashPassword(password);
+    const user = users.find(u => u.email === email && u.password === hashedPassword);
 
     if (!user) {
         return { success: false, message: 'Неверный email или пароль' };

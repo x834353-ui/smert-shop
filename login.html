@@ -158,154 +158,168 @@
     <script src="js/auth.js"></script>
     <script src="js/cart.js"></script>
     <script>
-        let pendingEmail = '';
+        // Use IIFE to avoid global variable pollution
+        (function() {
+            let pendingEmail = '';
 
-        // Переключение между формами входа и регистрации
-        function toggleForms() {
-            const loginForm = document.getElementById('login-form');
-            const registerForm = document.getElementById('register-form');
-            const verificationForm = document.getElementById('verification-form');
-            
-            loginForm.classList.toggle('hidden');
-            registerForm.classList.toggle('hidden');
-            verificationForm.classList.add('hidden');
-
-            // Очистка сообщений об ошибках
-            document.getElementById('login-message').style.display = 'none';
-            document.getElementById('register-message').style.display = 'none';
-            document.getElementById('verification-message').style.display = 'none';
-        }
-
-        // Показ формы верификации
-        function showVerificationForm(email, code) {
-            pendingEmail = email;
-            document.getElementById('login-form').classList.add('hidden');
-            document.getElementById('register-form').classList.add('hidden');
-            document.getElementById('verification-form').classList.remove('hidden');
-            
-            // В демо-режиме показываем код
-            const infoEl = document.getElementById('verification-info');
-            infoEl.innerHTML = `
-                Код верификации отправлен на <strong>${email}</strong>.<br>
-                <strong style="color: var(--accent-primary);">Ваш код: ${code}</strong><br>
-                <small>(В реальной системе код придёт вам на email)</small>
-            `;
-        }
-
-        // Обработка входа
-        function handleLogin(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('login-email').value;
-            const password = document.getElementById('login-password').value;
-            const messageEl = document.getElementById('login-message');
-
-            const result = login(email, password);
-
-            if (result.success) {
-                messageEl.className = 'success-message';
-                messageEl.textContent = result.message;
-                messageEl.style.display = 'block';
+            // Переключение между формами входа и регистрации
+            window.toggleForms = function() {
+                const loginForm = document.getElementById('login-form');
+                const registerForm = document.getElementById('register-form');
+                const verificationForm = document.getElementById('verification-form');
                 
-                setTimeout(() => {
-                    window.location.href = 'profile.html';
-                }, 1000);
-            } else {
-                messageEl.className = 'error-message';
-                messageEl.textContent = result.message;
-                messageEl.style.display = 'block';
-            }
-        }
+                loginForm.classList.toggle('hidden');
+                registerForm.classList.toggle('hidden');
+                verificationForm.classList.add('hidden');
 
-        // Обработка регистрации
-        function handleRegister(event) {
-            event.preventDefault();
-            
-            const email = document.getElementById('register-email').value;
-            const password = document.getElementById('register-password').value;
-            const confirmPassword = document.getElementById('register-confirm-password').value;
-            const messageEl = document.getElementById('register-message');
+                // Очистка сообщений об ошибках
+                document.getElementById('login-message').style.display = 'none';
+                document.getElementById('register-message').style.display = 'none';
+                document.getElementById('verification-message').style.display = 'none';
+            };
 
-            const result = register(email, password, confirmPassword);
-
-            if (result.success && result.needsVerification) {
-                // Показываем форму верификации
-                showVerificationForm(email, result.code);
-            } else if (result.success) {
-                messageEl.className = 'success-message';
-                messageEl.textContent = result.message;
-                messageEl.style.display = 'block';
+            // Показ формы верификации
+            function showVerificationForm(email, code) {
+                pendingEmail = email;
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('register-form').classList.add('hidden');
+                document.getElementById('verification-form').classList.remove('hidden');
                 
-                setTimeout(() => {
-                    login(email, password);
-                    window.location.href = 'profile.html';
-                }, 1500);
-            } else {
-                messageEl.className = 'error-message';
-                messageEl.textContent = result.message;
-                messageEl.style.display = 'block';
+                // В демо-режиме показываем код
+                const infoEl = document.getElementById('verification-info');
+                infoEl.innerHTML = `
+                    Код верификации отправлен на <strong>${email}</strong>.<br>
+                    <strong style="color: var(--accent-primary);">Ваш код: ${code}</strong><br>
+                    <small>(В реальной системе код придёт вам на email)</small>
+                `;
             }
-        }
 
-        // Обработка верификации
-        function handleVerification(event) {
-            event.preventDefault();
-            
-            const code = document.getElementById('verification-code').value;
-            const messageEl = document.getElementById('verification-message');
-
-            // Получаем временные данные перед верификацией
-            const tempData = JSON.parse(localStorage.getItem('tempRegistration') || '{}');
-            
-            const result = completeRegistration(pendingEmail, code);
-
-            if (result.success) {
-                messageEl.className = 'success-message';
-                messageEl.textContent = result.message;
-                messageEl.style.display = 'block';
+            // Обработка входа
+            window.handleLogin = function(event) {
+                event.preventDefault();
                 
-                setTimeout(() => {
-                    // Автоматический вход после верификации
-                    if (tempData.email && tempData.password) {
-                        login(tempData.email, tempData.password);
-                    }
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                const messageEl = document.getElementById('login-message');
+
+                const result = login(email, password);
+
+                if (result.success) {
+                    messageEl.className = 'success-message';
+                    messageEl.textContent = result.message;
+                    messageEl.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        window.location.href = 'profile.html';
+                    }, 1000);
+                } else {
+                    messageEl.className = 'error-message';
+                    messageEl.textContent = result.message;
+                    messageEl.style.display = 'block';
+                }
+            };
+
+            // Обработка регистрации
+            window.handleRegister = function(event) {
+                event.preventDefault();
+                
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+                const confirmPassword = document.getElementById('register-confirm-password').value;
+                const messageEl = document.getElementById('register-message');
+
+                const result = register(email, password, confirmPassword);
+
+                if (result.success && result.needsVerification) {
+                    // Показываем форму верификации
+                    showVerificationForm(email, result.code);
+                } else if (result.success) {
+                    messageEl.className = 'success-message';
+                    messageEl.textContent = result.message;
+                    messageEl.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        login(email, password);
+                        window.location.href = 'profile.html';
+                    }, 1500);
+                } else {
+                    messageEl.className = 'error-message';
+                    messageEl.textContent = result.message;
+                    messageEl.style.display = 'block';
+                }
+            };
+
+            // Обработка верификации
+            window.handleVerification = function(event) {
+                event.preventDefault();
+                
+                const code = document.getElementById('verification-code').value;
+                const messageEl = document.getElementById('verification-message');
+
+                // Получаем временные данные перед верификацией
+                const tempData = JSON.parse(localStorage.getItem('tempRegistration') || '{}');
+                
+                const result = completeRegistration(pendingEmail, code);
+
+                if (result.success) {
+                    messageEl.className = 'success-message';
+                    messageEl.textContent = result.message;
+                    messageEl.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        // Автоматический вход после верификации
+                        if (tempData.email && tempData.password) {
+                            // tempData.password уже хеширован, нужно использовать оригинальный
+                            // Сохраняем текущего пользователя напрямую
+                            const users = getUsers();
+                            const user = users.find(u => u.email === tempData.email);
+                            if (user) {
+                                const session = {
+                                    id: user.id,
+                                    email: user.email,
+                                    loginAt: new Date().toISOString()
+                                };
+                                localStorage.setItem('currentUser', JSON.stringify(session));
+                            }
+                        }
+                        window.location.href = 'profile.html';
+                    }, 1500);
+                } else {
+                    messageEl.className = 'error-message';
+                    messageEl.textContent = result.message;
+                    messageEl.style.display = 'block';
+                }
+            };
+
+            // Повторная отправка кода
+            window.resendVerificationCode = function() {
+                const tempData = localStorage.getItem('tempRegistration');
+                if (!tempData) {
+                    showNotification('Данные регистрации не найдены', 'error');
+                    return;
+                }
+                
+                const registration = JSON.parse(tempData);
+                const code = generateVerificationCode();
+                sendVerificationCode(registration.email, code);
+                
+                const infoEl = document.getElementById('verification-info');
+                infoEl.innerHTML = `
+                    Новый код отправлен на <strong>${registration.email}</strong>.<br>
+                    <strong style="color: var(--accent-primary);">Ваш код: ${code}</strong><br>
+                    <small>(В реальной системе код придёт вам на email)</small>
+                `;
+                
+                showNotification('Новый код отправлен');
+            };
+
+            // Проверка авторизации при загрузке
+            document.addEventListener('DOMContentLoaded', function() {
+                if (isAuthenticated()) {
                     window.location.href = 'profile.html';
-                }, 1500);
-            } else {
-                messageEl.className = 'error-message';
-                messageEl.textContent = result.message;
-                messageEl.style.display = 'block';
-            }
-        }
-
-        // Повторная отправка кода
-        function resendVerificationCode() {
-            const tempData = localStorage.getItem('tempRegistration');
-            if (!tempData) {
-                showNotification('Данные регистрации не найдены', 'error');
-                return;
-            }
-            
-            const registration = JSON.parse(tempData);
-            const code = generateVerificationCode();
-            sendVerificationCode(registration.email, code);
-            
-            const infoEl = document.getElementById('verification-info');
-            infoEl.innerHTML = `
-                Новый код отправлен на <strong>${registration.email}</strong>.<br>
-                <strong style="color: var(--accent-primary);">Ваш код: ${code}</strong><br>
-                <small>(В реальной системе код придёт вам на email)</small>
-            `;
-            
-            showNotification('Новый код отправлен');
-        }
-
-        // Проверка авторизации при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            if (isAuthenticated()) {
-                window.location.href = 'profile.html';
-            }
-        });
+                }
+            });
+        })();
     </script>
 </body>
 </html>

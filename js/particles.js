@@ -57,8 +57,22 @@ class ParticleBackground {
         particle.x += particle.vx;
         particle.y += particle.vy;
         
-        if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
-        if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+        // Clamp position and reverse velocity if out of bounds
+        if (particle.x < 0) {
+            particle.x = 0;
+            particle.vx *= -1;
+        } else if (particle.x > this.canvas.width) {
+            particle.x = this.canvas.width;
+            particle.vx *= -1;
+        }
+        
+        if (particle.y < 0) {
+            particle.y = 0;
+            particle.vy *= -1;
+        } else if (particle.y > this.canvas.height) {
+            particle.y = this.canvas.height;
+            particle.vy *= -1;
+        }
     }
     
     connectParticles() {
@@ -86,6 +100,8 @@ class ParticleBackground {
         
         this.connectParticles();
         
+        // Note: In a production app with SPA framework, add cleanup mechanism
+        // to stop animation when component unmounts using cancelAnimationFrame
         requestAnimationFrame(() => this.animate());
     }
 }
