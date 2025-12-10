@@ -453,14 +453,25 @@ footer {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.footer-section {
+    text-align: left;
+}
+
+.footer-section h4 {
+    color: var(--accent-primary);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
 }
 
 .footer-links {
     display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.8rem;
 }
 
 .footer-links a {
@@ -476,6 +487,11 @@ footer {
 .footer-copyright {
     color: var(--text-secondary);
     font-size: 0.9rem;
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
 }
 
 /* Утилиты */
@@ -534,6 +550,20 @@ footer {
     .form-container {
         padding: 1.5rem;
     }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    .main-shop-banner-home,
+    .main-shop-banner {
+        padding: 2rem 1.5rem;
+    }
+
+    .main-shop-banner-home h2,
+    .main-shop-banner h3 {
+        font-size: 1.5rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -552,4 +582,202 @@ footer {
     nav {
         padding: 0 1rem;
     }
+}
+
+/* Основной магазин баннер на главной странице */
+.main-shop-banner-home {
+    background: linear-gradient(135deg, var(--accent-dark), var(--accent-primary));
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+    animation: fadeIn 0.8s ease-out, pulse 3s ease-in-out infinite;
+    text-align: center;
+}
+
+.main-shop-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.main-shop-icon {
+    font-size: 4rem;
+    margin-bottom: 0.5rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.main-shop-banner-home h2 {
+    font-size: 2.2rem;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin: 0;
+}
+
+.main-shop-banner-home p {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+.btn-shop-main {
+    background-color: white;
+    color: var(--accent-dark);
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 1rem 3rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-shop-main:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background-color: #f8f8f8;
+}
+
+/* Основной магазин баннер на странице контактов */
+.main-shop-banner {
+    background: linear-gradient(135deg, var(--accent-dark), var(--accent-primary));
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    margin: 2rem 0;
+    box-shadow: 0 10px 40px rgba(139, 92, 246, 0.3);
+    text-align: center;
+}
+
+.main-shop-banner h3 {
+    font-size: 2rem;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    margin: 0.5rem 0;
+}
+
+.main-shop-banner p {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0.5rem 0;
+}
+
+/* Карточки контактов */
+.contact-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.contact-section-title {
+    color: var(--accent-primary);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+    transform: translateX(5px);
+    border-color: var(--accent-primary);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.contact-icon {
+    font-size: 2.5rem;
+    min-width: 50px;
+    text-align: center;
+}
+
+.contact-link-title {
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.contact-link-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Плагины */
+.plugins-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.plugin-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 2rem;
+    transition: all 0.3s ease;
+    animation: fadeIn 0.6s ease-out backwards;
+    position: relative;
+}
+
+.plugin-card:nth-child(1) { animation-delay: 0.1s; }
+.plugin-card:nth-child(2) { animation-delay: 0.2s; }
+.plugin-card:nth-child(3) { animation-delay: 0.3s; }
+.plugin-card:nth-child(4) { animation-delay: 0.4s; }
+
+.plugin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px var(--shadow);
+    border-color: var(--accent-primary);
+}
+
+.plugin-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.plugin-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--accent-primary);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+
+.plugin-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent-primary);
+}
+
+.plugin-card p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+    min-height: 3em;
 }
