@@ -140,13 +140,15 @@ const programs = [
         id: 'cardinal-bot',
         name: 'Cardinal Bot',
         description: 'Мощный бот для автоматизации задач и процессов',
-        icon: '🤖'
+        icon: '🤖',
+        link: null
     },
     {
         id: 'funpay-tools',
         name: 'FunPay Tools',
         description: 'Набор инструментов для работы с FunPay',
-        icon: '🛠️'
+        icon: '🛠️',
+        link: null
     },
     {
         id: 'auto-clicker',
@@ -159,7 +161,38 @@ const programs = [
         id: 'password-generator',
         name: 'Password Generator',
         description: 'Генератор надёжных паролей',
-        icon: '🔐'
+        icon: '🔐',
+        link: null
+    }
+];
+const programs = [
+    {
+        id: 'cardinal-bot',
+        name: 'Cardinal Bot',
+        description: 'Мощный бот для автоматизации задач и процессов',
+        icon: '🤖',
+        link: null
+    },
+    {
+        id: 'funpay-tools',
+        name: 'FunPay Tools',
+        description: 'Набор инструментов для работы с FunPay',
+        icon: '🛠️',
+        link: null
+    },
+    {
+        id: 'auto-clicker',
+        name: 'Auto Clicker',
+        description: 'Автоматический кликер с настройками',
+        icon: '🖱️',
+        link: 'https://github.com/oriash93/AutoClicker'
+    },
+    {
+        id: 'password-generator',
+        name: 'Password Generator',
+        description: 'Генератор надёжных паролей',
+        icon: '🔐',
+        link: null
     }
 ];
 
