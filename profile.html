@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Animated Background -->
+    <canvas id="particles-canvas"></canvas>
+    
     <!-- Шапка сайта -->
     <header>
         <nav>
@@ -44,16 +47,49 @@
     <!-- Футер -->
     <footer>
         <div class="footer-content">
-            <div class="footer-links">
-                <a href="index.html">Главная</a>
-                <a href="catalog.html">Каталог</a>
-                <a href="cart.html">Корзина</a>
-                <a href="profile.html">Профиль</a>
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>Навигация</h3>
+                    <div class="footer-links">
+                        <a href="index.html">→ Главная</a>
+                        <a href="catalog.html">→ Каталог</a>
+                        <a href="cart.html">→ Корзина</a>
+                        <a href="profile.html">→ Профиль</a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Контакты</h3>
+                    <div class="social-links">
+                        <a href="https://t.me/xomka2222" class="social-link" target="_blank">
+                            <span class="icon">📱</span>
+                            <span>Telegram: @xomka2222</span>
+                        </a>
+                        <a href="https://discord.gg/chk9dNSQ" class="social-link" target="_blank">
+                            <span class="icon">💬</span>
+                            <span>Discord Server</span>
+                        </a>
+                        <a href="https://t.me/SmertTeamfunpay" class="social-link" target="_blank">
+                            <span class="icon">📢</span>
+                            <span>TG Канал: SmertTeam</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Дополнительно</h3>
+                    <div class="footer-links">
+                        <a href="https://xomkaportfolio.replit.app/" target="_blank">→ Портфолио</a>
+                        <a href="https://71e46d79-cc43-4d0b-a8e2-86afa0ac4b03-00-28qpcbh7rzjmx.janeway.replit.dev/" target="_blank">→ Основной магазин</a>
+                    </div>
+                </div>
             </div>
+            
             <p class="footer-copyright">© 2024 SMERT-SHOP. Все права защищены.</p>
         </div>
     </footer>
 
+    <script src="js/particles.js"></script>
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/cart.js"></script>

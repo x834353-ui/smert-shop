@@ -137,28 +137,44 @@ function renderCartItems() {
 // Каталог программ
 const programs = [
     {
-        id: 'cardinal-bot',
-        name: 'Cardinal Bot',
-        description: 'Мощный бот для автоматизации задач и процессов',
-        icon: '🤖'
-    },
-    {
-        id: 'funpay-tools',
-        name: 'FunPay Tools',
-        description: 'Набор инструментов для работы с FunPay',
-        icon: '🛠️'
+        id: 'funpay-cardinal',
+        name: 'FunPay Cardinal',
+        description: 'Бот для автоматизации продаж на FunPay. Полный функционал для управления заказами.',
+        icon: '🤖',
+        link: 'https://github.com/sidor0912/FunPayCardinal',
+        linkText: 'GitHub'
     },
     {
         id: 'auto-clicker',
         name: 'Auto Clicker',
-        description: 'Автоматический кликер с настройками',
-        icon: '🖱️'
+        description: 'Автоматический кликер с гибкими настройками интервалов и горячих клавиш.',
+        icon: '🖱️',
+        link: 'https://github.com/robiot/xclicker',
+        linkText: 'GitHub'
     },
     {
-        id: 'password-generator',
-        name: 'Password Generator',
-        description: 'Генератор надёжных паролей',
-        icon: '🔐'
+        id: 'autostars',
+        name: 'AutoStars',
+        description: 'Плагин для FPC: Автоматическое выставление звёзд и отзывов покупателям.',
+        icon: '⭐',
+        link: 'https://t.me/fpc_plugins',
+        linkText: 'Telegram @fpc_plugins'
+    },
+    {
+        id: 'cookie-changer',
+        name: 'Cookie Changer',
+        description: 'Плагин для FPC: Смена golden_key прямо в боте без перезагрузки.',
+        icon: '🍪',
+        link: 'https://t.me/fpc_plugins',
+        linkText: 'Telegram @fpc_plugins'
+    },
+    {
+        id: 'advanced-profile-stats',
+        name: 'Advanced Profile Stats',
+        description: 'Плагин для FPC: Расширенная статистика заработка и сумма к выводу.',
+        icon: '📊',
+        link: 'https://t.me/fpc_plugins',
+        linkText: 'Telegram @fpc_plugins'
     }
 ];
 
